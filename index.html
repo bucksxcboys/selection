@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bucks Cross Country – U14 & U16 Boys Selection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Colours taken from bucksaa.org.uk */
+  :root {
+    --maroon: #7c2c3b;
+    --cyan: #2fd1ef;
+    --cyan-soft: #94e5f4;
+    --pale: #f5fdff;
+    --ink: #222222;
+    --muted: #5d6670;
+    --line: #cfe3e8;
+    --error: #b42318;
+    --error-bg: #fdecea;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Raleway, "Segoe UI", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--pale);
+    line-height: 1.5;
+  }
+  header {
+    background: var(--cyan-soft);
+    border-bottom: 4px solid var(--cyan);
+    padding: 28px 16px 22px;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 4px; font-size: 1.7rem; color: var(--maroon); font-weight: 700; }
+  header p { margin: 0; font-weight: 600; }
+  main { max-width: 700px; margin: 0 auto; padding: 20px 16px 48px; }
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card h2 { margin: 0 0 12px; font-size: 1.15rem; color: var(--maroon); }
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .q { display: block; font-weight: 700; margin-bottom: 6px; }
+  .opt { font-weight: 400; color: var(--muted); font-size: .88rem; }
+  input[type=text], input[type=email], input[type=tel], input[type=date], select, textarea {
+    width: 100%;
+    padding: 10px 11px;
+    border: 1px solid #b9d3da;
+    border-radius: 7px;
+    font: inherit;
+    background: #fff;
+  }
+  textarea { min-height: 84px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--cyan); border-color: var(--cyan); }
+  .choices label {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 9px 11px; margin-bottom: 6px;
+    border: 1px solid var(--line); border-radius: 7px; cursor: pointer;
+  }
+  .choices label:hover { background: var(--pale); }
+  .choices input { margin-top: 5px; accent-color: var(--maroon); }
+  .yn { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .yn label { margin-bottom: 0; }
+  .invalid input, .invalid select, .invalid textarea, .invalid .choices label { border-color: var(--error); }
+  .err { color: var(--error); font-size: .88rem; margin-top: 5px; display: none; }
+  .invalid .err { display: block; }
+  .team {
+    margin-top: 10px; padding: 10px 12px; border-radius: 7px;
+    background: var(--cyan-soft); font-weight: 700; display: none;
+  }
+  .team.bad { background: var(--error-bg); color: var(--error); }
+  .stop {
+    background: var(--error-bg); color: var(--error);
+    border-radius: 7px; padding: 12px; margin-top: 10px; font-weight: 600; display: none;
+  }
+  .sub { margin-top: 10px; display: none; }
+  .note { font-size: .9rem; color: var(--muted); }
+  button {
+    width: 100%; padding: 14px; font: inherit; font-weight: 700; font-size: 1.05rem;
+    color: #fff; background: var(--maroon); border: 0; border-radius: 8px; cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  button:disabled { opacity: .6; cursor: wait; }
+  #formError { color: var(--error); font-weight: 700; text-align: center; margin: 10px 0 0; display: none; }
+  #done { text-align: center; }
+  #done a { color: var(--maroon); font-weight: 700; }
+  .hp { position: absolute; left: -9999px; height: 0; overflow: hidden; }
+  @media (max-width: 480px) { .yn { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Bucks Cross Country</h1>
+  <p>U14 and U16 Boys – team selection form</p>
+</header>
+
+<main>
+  <form id="f" novalidate>
+
+    <div class="card">
+      <p style="margin:0 0 10px"><strong>This form is only for the Bucks U14 and U16 Boys cross country teams</strong>: boys in school years 7 to 10. U14 is Years 7 and 8, U16 is Years 9 and 10.</p>
+      <p style="margin:0 0 10px">Girls, and boys in other age groups, have their own team managers, so please don't use this form for them.</p>
+      <p style="margin:0 0 10px">If your son would like to be considered for selection this season, please fill in one form per athlete.</p>
+      <p style="margin:0; padding-top:10px; border-top:1px solid var(--line)"><strong>Team manager:</strong> David Small, Bucks Cross Country U14 &amp; U16 Boys Team Manager<br>
+      <strong>Questions?</strong> Email <a href="mailto:boysbuckscrosscountry@gmail.com" style="color:var(--maroon); font-weight:700">boysbuckscrosscountry@gmail.com</a></p>
+    </div>
+
+    <!-- ATHLETE -->
+    <div class="card">
+      <h2>The athlete</h2>
+
+      <div class="field">
+        <label class="q" for="athleteName">Full name of athlete</label>
+        <input type="text" id="athleteName" name="athleteName" required autocomplete="off">
+        <div class="err">Please enter the athlete's full name.</div>
+      </div>
+
+      <div class="field">
+        <label class="q" for="dob">Date of birth</label>
+        <input type="date" id="dob" name="dob" required>
+        <div class="err" id="dobErr">Please enter his date of birth.</div>
+        <div class="team" id="teamBox"></div>
+      </div>
+
+      <div class="field">
+        <label class="q" for="club">Which club is your athlete a member of? <span class="opt">(write "None" if he isn't in a club)</span></label>
+        <input type="text" id="club" name="club" required autocomplete="off">
+        <div class="err">Please enter his club, or write "None".</div>
+      </div>
+
+      <div class="field" data-group="bucks">
+        <span class="q">Does the athlete live in Buckinghamshire, or was he born in Buckinghamshire?</span>
+        <div class="choices yn">
+          <label><input type="radio" name="bucks" value="Yes"> Yes</label>
+          <label><input type="radio" name="bucks" value="No"> No</label>
+        </div>
+        <div class="err">Please choose Yes or No.</div>
+        <div class="stop" id="bucksStop">Thank you for your interest. Only athletes who live in, or were born in, Buckinghamshire are eligible for the Bucks team, so there is no need to complete the rest of this form.</div>
+      </div>
+    </div>
+
+    <div id="rest">
+
+      <!-- RACES -->
+      <div class="card">
+        <h2>Races</h2>
+
+        <div class="field" data-group="seaa">
+          <span class="q">Is the athlete available for the SEAA Inter Counties on Saturday 28 November 2026, and does he wish to be considered for selection?</span>
+          <div class="choices yn">
+            <label><input type="radio" name="seaa" value="Yes"> Yes</label>
+            <label><input type="radio" name="seaa" value="No"> No</label>
+          </div>
+          <div class="err">Please choose Yes or No.</div>
+        </div>
+
+        <div class="field" data-group="national">
+          <span class="q">Is the athlete available for the National Inter Counties on Saturday 13 March 2027, and does he wish to be considered for selection?</span>
+          <div class="choices yn">
+            <label><input type="radio" name="national" value="Yes"> Yes</label>
+            <label><input type="radio" name="national" value="No"> No</label>
+          </div>
+          <div class="err">Please choose Yes or No.</div>
+        </div>
+
+        <div class="stop" id="raceStop">You have answered No to both races. The form can only be sent if he is available for at least one of them.</div>
+      </div>
+
+      <!-- MEDICAL -->
+      <div class="card">
+        <h2>About your athlete</h2>
+        <div class="field" data-group="medical">
+          <span class="q">Does the athlete have any medical conditions or SEN, or is there anything else you think it would be useful for us to know?</span>
+          <div class="choices yn">
+            <label><input type="radio" name="medical" value="Yes"> Yes</label>
+            <label><input type="radio" name="medical" value="No"> No</label>
+          </div>
+          <div class="err">Please choose Yes or No.</div>
+          <div class="sub" id="medicalSub">
+            <label class="q" for="medicalDetails" style="margin-top:6px">Please give details</label>
+            <textarea id="medicalDetails" name="medicalDetails"></textarea>
+            <div class="err" id="medicalDetailsErr" style="display:none">Please give some details.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARENT -->
+      <div class="card">
+        <h2>Parent or carer</h2>
+        <div class="field">
+          <label class="q" for="parentName">Parent/carer name</label>
+          <input type="text" id="parentName" name="parentName" required autocomplete="name">
+          <div class="err">Please enter your name.</div>
+        </div>
+        <div class="field">
+          <label class="q" for="address">Home address <span class="opt">(including postcode)</span></label>
+          <textarea id="address" name="address" required autocomplete="street-address"></textarea>
+          <div class="err">Please enter your home address.</div>
+        </div>
+        <div class="field">
+          <label class="q" for="parentEmail">Parent/carer email address</label>
+          <input type="email" id="parentEmail" name="parentEmail" required autocomplete="email">
+          <div class="err">Please enter a valid email address.</div>
+        </div>
+        <div class="field">
+          <label class="q" for="parentMobile">Parent/carer mobile number</label>
+          <input type="tel" id="parentMobile" name="parentMobile" required autocomplete="tel">
+          <div class="err">Please enter a mobile number.</div>
+        </div>
+        <div class="field" data-group="whatsapp">
+          <span class="q">If selected, are you happy to be added to a WhatsApp group where details of the events will be shared?</span>
+          <div class="choices yn">
+            <label><input type="radio" name="whatsapp" value="Yes"> Yes</label>
+            <label><input type="radio" name="whatsapp" value="No"> No</label>
+          </div>
+          <div class="err">Please choose Yes or No.</div>
+        </div>
+      </div>
+
+      <!-- VEST -->
+      <div class="card">
+        <h2>Running vest</h2>
+        <div class="field" data-group="vest">
+          <span class="q">Please choose one:</span>
+          <div class="choices">
+            <label><input type="radio" name="vest" value="Has vest"> If selected, my athlete has a Bucks running vest for this season and doesn't need to order a new one.</label>
+            <label><input type="radio" name="vest" value="Needs vest"> If selected, my athlete doesn't have a Bucks running vest for this season and we need to order a new one.</label>
+          </div>
+          <div class="err">Please choose one option.</div>
+          <div class="sub" id="vestSub">
+            <label class="q" for="vestSize" style="margin-top:6px">Vest size</label>
+            <select id="vestSize" name="vestSize">
+              <option value="">Please choose a size</option>
+              <option>30" chest</option>
+              <option>32" chest</option>
+              <option>34" chest</option>
+              <option>36" chest</option>
+              <option>38" chest</option>
+              <option>40" chest</option>
+              <option>42" chest</option>
+            </select>
+            <div class="err" id="vestSizeErr" style="display:none">Please choose a size.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="note" style="margin:0">These details are used only by the Bucks U14 and U16 Boys cross country team manager to consider your son for selection and, if he is selected, to enter him for races and manage the team on race days. They are kept securely and deleted at the end of the season.</p>
+      </div>
+
+      <!-- Spam trap: hidden from people, bots fill it in -->
+      <div class="hp" aria-hidden="true">
+        <label for="website">Leave this empty</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button type="submit" id="submitBtn">Submit for selection</button>
+      <p id="formError"></p>
+    </div>
+  </form>
+
+  <div id="done" class="card" hidden>
+    <h2 style="color:var(--maroon)">Thank you</h2>
+    <p id="doneMsg"></p>
+    <p><a href="" id="another">Submit another athlete</a></p>
+  </div>
+</main>
+
+<script>
+  // ===== The only line to change: paste your Apps Script web app address between the quotes =====
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2qL5je3K58Ardf3WlWTWubQ-nYJ4z6ckpHS94WPlnSsL-NJY83ombUgEyJ9XT2tnkuA/exec";
+  // ==============================================================================================
+
+  const form = document.getElementById('f');
+  const $ = id => document.getElementById(id);
+  const radio = name => { const r = form.querySelector('input[name="' + name + '"]:checked'); return r ? r.value : ''; };
+  let team = { ok: false };
+
+  // ---- Team from date of birth (school year starts 1 September) ----
+  function teamFromDob(v) {
+    if (!v) return { ok: false };
+    const [y, m] = v.split('-').map(Number);
+    const today = new Date();
+    const seasonStart = today.getMonth() >= 8 ? today.getFullYear() : today.getFullYear() - 1;
+    const birthYearStart = m >= 9 ? y : y - 1;
+    const year = seasonStart - birthYearStart - 5;          // Reception = 0
+    if (year === 7 || year === 8) return { ok: true, year, group: 'U14' };
+    if (year === 9 || year === 10) return { ok: true, year, group: 'U16' };
+    return { ok: false, year, msg: 'This date of birth puts him in ' +
+      (year >= 1 ? 'Year ' + year : 'primary school') +
+      '. This form is for school years 7 to 10 only, so please check the date.' };
+  }
+
+  function showTeam() {
+    team = teamFromDob($('dob').value);
+    const box = $('teamBox');
+    if (!$('dob').value) { box.style.display = 'none'; return; }
+    box.style.display = 'block';
+    box.classList.toggle('bad', !team.ok);
+    box.textContent = team.ok ? 'Team: ' + team.group + ' (School Year ' + team.year + ')' : team.msg;
+  }
+  $('dob').addEventListener('input', showTeam);
+  $('dob').addEventListener('change', showTeam);
+
+  // ---- Show and hide parts of the form ----
+  function refresh() {
+    const notBucks = radio('bucks') === 'No';
+    $('bucksStop').style.display = notBucks ? 'block' : 'none';
+    $('rest').style.display = notBucks ? 'none' : 'block';
+    $('medicalSub').style.display = radio('medical') === 'Yes' ? 'block' : 'none';
+    $('vestSub').style.display = radio('vest') === 'Needs vest' ? 'block' : 'none';
+    $('raceStop').style.display = (radio('seaa') === 'No' && radio('national') === 'No') ? 'block' : 'none';
+  }
+  form.addEventListener('change', e => {
+    refresh();
+    const f = e.target.closest('.field');
+    if (f) f.classList.remove('invalid');
+    if (e.target.id === 'medicalDetails' || e.target.name === 'medical') $('medicalDetailsErr').style.display = 'none';
+    if (e.target.id === 'vestSize' || e.target.name === 'vest') $('vestSizeErr').style.display = 'none';
+  });
+  form.addEventListener('input', e => {
+    const f = e.target.closest('.field');
+    if (f && e.target.type !== 'radio') f.classList.remove('invalid');
+  });
+
+  // ---- Checks before sending ----
+  function validate() {
+    let first = null;
+    const flag = (field, bad) => { field.classList.toggle('invalid', bad); if (bad && !first) first = field; };
+
+    form.querySelectorAll('input[required], textarea[required]').forEach(el => {
+      let bad = !el.value.trim();
+      if (!bad && el.type === 'email') bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+      flag(el.closest('.field'), bad);
+    });
+
+    if ($('dob').value && !team.ok) {
+      $('dobErr').textContent = 'This date of birth is outside school years 7 to 10.';
+      flag($('dob').closest('.field'), true);
+    } else {
+      $('dobErr').textContent = 'Please enter his date of birth.';
+    }
+
+    form.querySelectorAll('[data-group]').forEach(g => flag(g, !radio(g.dataset.group)));
+
+    if (radio('medical') === 'Yes' && !$('medicalDetails').value.trim()) {
+      $('medicalDetailsErr').style.display = 'block';
+      if (!first) first = $('medicalDetails');
+    }
+    if (radio('vest') === 'Needs vest' && !$('vestSize').value) {
+      $('vestSizeErr').style.display = 'block';
+      if (!first) first = $('vestSize');
+    }
+    if (radio('seaa') === 'No' && radio('national') === 'No' && !first) first = $('raceStop');
+
+    return first;
+  }
+
+  function ukDate(v) {
+    if (!v) return '';
+    const [y, m, d] = v.split('-');
+    return d + '/' + m + '/' + y;
+  }
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const err = $('formError');
+    err.style.display = 'none';
+    if (radio('bucks') === 'No') return;
+
+    const first = validate();
+    if (first) {
+      first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      err.textContent = 'Please check the questions marked in red.';
+      err.style.display = 'block';
+      return;
+    }
+
+    const data = new URLSearchParams({
+      athleteName: $('athleteName').value.trim(),
+      dob: ukDate($('dob').value),
+      ageGroup: team.group,
+      schoolYear: 'Year ' + team.year,
+      club: $('club').value.trim(),
+      bucks: radio('bucks'),
+      seaa: radio('seaa'),
+      national: radio('national'),
+      medical: radio('medical'),
+      medicalDetails: radio('medical') === 'Yes' ? $('medicalDetails').value.trim() : '',
+      parentName: $('parentName').value.trim(),
+      address: $('address').value.trim(),
+      parentEmail: $('parentEmail').value.trim(),
+      parentMobile: $('parentMobile').value.trim(),
+      whatsapp: radio('whatsapp'),
+      vest: radio('vest'),
+      vestSize: radio('vest') === 'Needs vest' ? $('vestSize').value : '',
+      website: $('website').value
+    });
+
+    const btn = $('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try {
+      await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
+      form.hidden = true;
+      $('doneMsg').textContent = "We've received " + data.get('athleteName') + "'s details for the " +
+        team.group + " Boys team. A confirmation email is on its way to " + data.get('parentEmail') + ".";
+      $('done').hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (ex) {
+      err.textContent = "Sorry, the form couldn't be sent. Please check your internet connection and try again.";
+      err.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Submit for selection';
+    }
+  });
+
+  $('another').addEventListener('click', e => {
+    e.preventDefault();
+    form.reset();
+    showTeam();
+    refresh();
+    form.querySelectorAll('.invalid').forEach(x => x.classList.remove('invalid'));
+    form.hidden = false;
+    $('done').hidden = true;
+    window.scrollTo({ top: 0 });
+  });
+
+  refresh();
+</script>
+</body>
+</html>
